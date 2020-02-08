@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"net"
 
@@ -19,22 +20,26 @@ func newProductService(data []*pb.Product) *ProductService {
 	return &ProductService{data: data}
 }
 
-// GetProducts searches (by Code or Number) and return ProductList
+// GetProducts returns all ProductList
 func (c *ProductService) GetProducts(
 	ctx context.Context,
 	e *empty.Empty,
 	//req *pb.ProductRequest,
 ) (*pb.ProductList, error) {
-
-	// var items []*pb.Product
-	// for _, cur := range c.data {
-	// 	if cur.GetNumber() == req.GetNumber() || cur.GetCode() == req.GetCode() {
-	// 		items = append(items, cur)
-	// 	}
-	// }
-
-	// return &pb.ProductList{Items: items}, nil
 	return &pb.ProductList{Products: c.data}, nil
+}
+
+// GetProduct filters product list by its id and returns a single product if one matched
+func (c *ProductService) GetProduct(ctx context.Context, req *pb.ProductQuery) (*pb.Product, error) {
+	var item *pb.Product
+	err := errors.New("Item not found")
+	for _, cur := range c.data {
+		if cur.GetId() == req.GetId() {
+			item = cur
+			err = nil
+		}
+	}
+	return item, err
 }
 
 func main() {
@@ -50,7 +55,7 @@ func main() {
 	pb.RegisterProductServiceServer(grpcServer, productService)
 
 	// start service's server
-	log.Println("starting Product rpc service on", 9000)
+	log.Println("starting Product rpc service on", 9001)
 	if err := grpcServer.Serve(lstnr); err != nil {
 		log.Fatal(err)
 	}

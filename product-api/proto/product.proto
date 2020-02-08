@@ -14,8 +14,12 @@ message ProductList {
     repeated Product products = 1;
 }
 
+message ProductQuery {
+    int32 id = 1;
+}
 
 // ProductListService exposes methods to call
 service ProductService {
     rpc GetProducts(google.protobuf.Empty) returns (ProductList){}
+    rpc GetProduct(ProductQuery) returns (Product){}
 }
