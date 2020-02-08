@@ -11,19 +11,33 @@ import (
 	"google.golang.org/grpc"
 )
 
-// printUSD demonstrates simple binary call from client
-func printUSD(client pb.ProductServiceClient) {
+// printProducts demonstrates simple binary call from client
+func printProducts(client pb.ProductServiceClient) {
 	var emptyReq empty.Empty
 	emptyReq = empty.Empty{}
 	curList, err := client.GetProducts(context.Background(), &emptyReq)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("\nUSD Countries")
+	fmt.Println("\nProducts")
 	fmt.Println("-------------")
 	for _, cur := range curList.Products {
 		fmt.Printf("%-50s%-10s\n", cur.Name, cur.Description)
 	}
+}
+
+// selectProduct demonstrates simple binary call from client
+func selectProducts(client pb.ProductServiceClient) {
+	prodReq := &pb.ProductQuery{
+		id: 1,
+	}
+	item, err := client.GetProduct(context.Background(), prodReq)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("\nProduct")
+	fmt.Println("-------------")
+	fmt.Printf("%-50s%-10s\n", item.Name, item.Description)
 }
 
 func main() {
@@ -37,5 +51,5 @@ func main() {
 
 	client := pb.NewProductServiceClient(conn)
 
-	printUSD(client)
+	printProducts(client)
 }
