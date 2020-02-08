@@ -1,0 +1,21 @@
+syntax = "proto3";
+package proto;
+
+import "google/protobuf/empty.proto";
+
+message Product {
+    int32 id = 1;
+    string name = 2;
+    string description = 3;
+    float price = 4;
+}
+
+message ProductList {
+    repeated Product products = 1;
+}
+
+
+// ProductListService exposes methods to call
+service ProductService {
+    rpc GetProducts(google.protobuf.Empty) returns (ProductList){}
+}
