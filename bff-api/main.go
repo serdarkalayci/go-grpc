@@ -27,9 +27,9 @@ func printProducts(client pb.ProductServiceClient) {
 }
 
 // selectProduct demonstrates simple binary call from client
-func selectProducts(client pb.ProductServiceClient) {
+func selectProduct(client pb.ProductServiceClient) {
 	prodReq := &pb.ProductQuery{
-		id: 1,
+		Id: 1,
 	}
 	item, err := client.GetProduct(context.Background(), prodReq)
 	if err != nil {
@@ -52,4 +52,5 @@ func main() {
 	client := pb.NewProductServiceClient(conn)
 
 	printProducts(client)
+	selectProduct(client)
 }
