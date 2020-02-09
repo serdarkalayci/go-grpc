@@ -42,6 +42,16 @@ func (c *ProductService) GetProduct(ctx context.Context, req *pb.ProductQuery) (
 	return item, err
 }
 
+// AddProduct adds a new product to array
+func (c *ProductService) AddProduct(ctx context.Context, product *pb.Product) (empty.Empty, error) {
+	return empty.Empty{}, nil
+}
+
+// UpdateProduct updates a new product to array
+func (c *ProductService) UpdateProduct(ctx context.Context, product *pb.Product) (empty.Empty, error) {
+	return empty.Empty{}, nil
+}
+
 func main() {
 
 	lstnr, err := net.Listen("tcp", ":9001")

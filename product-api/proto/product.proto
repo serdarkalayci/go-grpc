@@ -22,4 +22,6 @@ message ProductQuery {
 service ProductService {
     rpc GetProducts(google.protobuf.Empty) returns (ProductList){}
     rpc GetProduct(ProductQuery) returns (Product){}
+    rpc AddProduct(Product) returns (google.protobuf.Empty){}
+    rpc UpdateProduct(Product) returns (google.protobuf.Empty){}
 }
