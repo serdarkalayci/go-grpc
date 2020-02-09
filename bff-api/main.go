@@ -48,7 +48,9 @@ func addProduct(client pb.ProductServiceClient) {
 		Price:       3.00,
 	}
 	_, err := client.AddProduct(context.Background(), product)
-	fmt.Println("\nProduct added")
+	if err != nil {
+		fmt.Println("\nProduct added")
+	}
 }
 
 func updateProduct(client pb.ProductServiceClient) {
@@ -59,7 +61,9 @@ func updateProduct(client pb.ProductServiceClient) {
 		Price:       2.00,
 	}
 	_, err := client.UpdateProduct(context.Background(), product)
-	fmt.Println("\nProduct update")
+	if err != nil {
+		fmt.Println("\nProduct update")
+	}
 }
 
 func main() {
@@ -73,6 +77,8 @@ func main() {
 
 	client := pb.NewProductServiceClient(conn)
 
+	addProduct(client)
+	updateProduct(client)
 	printProducts(client)
 	selectProduct(client)
 }
