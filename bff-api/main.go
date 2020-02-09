@@ -40,6 +40,28 @@ func selectProduct(client pb.ProductServiceClient) {
 	fmt.Printf("%-50s%-10s\n", item.Name, item.Description)
 }
 
+func addProduct(client pb.ProductServiceClient) {
+	product := &pb.Product{
+		Id:          3,
+		Name:        "Frappucino",
+		Description: "Coffee with broken ice",
+		Price:       3.00,
+	}
+	_, err := client.AddProduct(context.Background(), product)
+	fmt.Println("\nProduct added")
+}
+
+func updateProduct(client pb.ProductServiceClient) {
+	product := &pb.Product{
+		Id:          1,
+		Name:        "Latte",
+		Description: "Froth milky coffee",
+		Price:       2.00,
+	}
+	_, err := client.UpdateProduct(context.Background(), product)
+	fmt.Println("\nProduct update")
+}
+
 func main() {
 	serverAddr := net.JoinHostPort("localhost", "9001")
 
